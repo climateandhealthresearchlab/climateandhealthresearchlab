@@ -41,62 +41,114 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
       color: var(--text-color);
     }
-    #google_translate_element {
-      position: fixed;
-      top: 60px;
-      right: 10px;
-      z-index: 9999;
-      background: var(--secondary-bg);
-      padding: 1px 4px;
+
+    /* ── Language Switcher ── */
+    .lang-switcher {
+      position: relative;
+      display: inline-block;
+      margin-left: 12px;
+      vertical-align: middle;
+    }
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.18);
+      border: 1.5px solid rgba(255,255,255,0.55);
       border-radius: 20px;
-      border: 1px solid #ccc;
-      width: 90px;
-      height: auto;
+      padding: 4px 10px 4px 7px;
+      cursor: pointer;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: background 0.18s, border-color 0.18s;
+      white-space: nowrap;
+    }
+    .lang-btn:hover {
+      background: rgba(255,255,255,0.30);
+      border-color: rgba(255,255,255,0.8);
+    }
+    .lang-btn .flag {
+      width: 22px;
+      height: 16px;
+      border-radius: 3px;
+      object-fit: cover;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+      flex-shrink: 0;
+    }
+    .lang-btn .caret-icon {
+      font-size: 10px;
+      opacity: 0.85;
+      margin-left: 2px;
+      transition: transform 0.2s;
+    }
+    .lang-switcher.open .caret-icon {
+      transform: rotate(180deg);
     }
 
-    /* Compact Google Translate widget */
-    .goog-te-gadget {
-      font-size: 0 !important;
-      color: transparent !important;
+    /* Dropdown */
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+      min-width: 160px;
+      z-index: 9999;
+      overflow: hidden;
+      padding: 6px 0;
+      animation: dropIn 0.18s ease;
     }
-    .goog-te-gadget-simple {
-      padding: 0 !important;
-      border: none !important;
-      background: none !important;
+    @keyframes dropIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(-6px); }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0); }
     }
-    .goog-te-combo {
-      margin: 0 !important;
-      padding: 2px 6px !important;   /* very tight padding */
-      font-size: 6px !important;    /* smaller text */
-      height: 22px !important;       /* shorter */
-      width: 100px !important;       /* narrower - main change here */
-      min-width: 90px !important;
-      max-width: 100px !important;
-      border-radius: 20px !important;
-      border: 1px solid #ccc !important;
-      background: var(--secondary-bg) !important;
-      color: var(--text-color) !important;
-      box-shadow: none !important;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
+    /* Arrow */
+    .lang-dropdown::before {
+      content: '';
+      position: absolute;
+      top: -7px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 8px solid #fff;
+      filter: drop-shadow(0 -2px 2px rgba(0,0,0,0.08));
     }
-    /* Hide branding / extra elements */
-    .goog-te-gadget .goog-te-banner-frame,
-    .goog-logo-link,
-    .goog-te-gadget-icon,
-    .goog-te-combo + span,
-    .goog-te-combo + div {
-      display: none !important;
+    .lang-switcher.open .lang-dropdown {
+      display: block;
     }
-    /* Smaller dropdown menu when opened */
-    .goog-te-menu-frame {
-      max-width: 130px !important;
+    .lang-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 18px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #333;
+      font-weight: 500;
+      transition: background 0.14s;
+      text-decoration: none;
     }
-    .goog-te-menu2 {
-      font-size: 10px !important;
-      max-width: 100% !important;
-      overflow-x: hidden !important;
+    .lang-option:hover {
+      background: #f3f3f3;
+    }
+    .lang-option.active {
+      background: #edf7ee;
+      color: #2e7d32;
+      font-weight: 700;
+    }
+    .lang-option .flag {
+      width: 26px;
+      height: 18px;
+      border-radius: 3px;
+      object-fit: cover;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      flex-shrink: 0;
     }
 
     #footer {
@@ -106,13 +158,24 @@
     .clearfix {
       clear: both;
     }
+
+    /* Inject lang switcher into Bootstrap navbar */
+    .navbar-inner .container {
+      display: flex;
+      align-items: center;
+    }
+    .nav.navbar-right-extras {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
   </style>
 </head>
 <body>
 <button class="theme-toggle" id="themeToggle">
   <span id="themeIcon">🌙</span> Dark
 </button>
-<div id="google_translate_element"></div>
+
 <div class="container">
   <!-- HEADER -->
   <header id="overview" style="text-align:center; margin-bottom:20px;">
@@ -120,6 +183,7 @@
          alt="Climate And Health Research Lab Banner"
          style="width:100%; height:auto;">
   </header>
+
   <!-- NAVIGATION -->
   <div class="masthead">
     <div class="navbar">
@@ -136,10 +200,44 @@
             <li><a href="join.html">Join Us</a></li>
             <li><a href="contact.html">Contact</a></li>
           </ul>
+
+          <!-- ── Language Switcher (lives in navbar) ── -->
+          <ul class="nav navbar-right-extras">
+            <li>
+              <div class="lang-switcher" id="langSwitcher">
+                <button class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false">
+                  <!-- Flag rendered as inline SVG emoji via img or via flagcdn -->
+                  <img class="flag" src="https://flagcdn.com/w40/us.png" alt="EN" id="activeFlagImg">
+                  <span id="activeLangCode">EN</span>
+                  <span class="caret-icon">▼</span>
+                </button>
+                <div class="lang-dropdown" id="langDropdown" role="menu">
+                  <a class="lang-option active" href="#" data-lang="en" data-code="EN" data-flag="https://flagcdn.com/w40/us.png" role="menuitem">
+                    <img class="flag" src="https://flagcdn.com/w40/us.png" alt=""> English
+                  </a>
+                  <a class="lang-option" href="#" data-lang="fr" data-code="FR" data-flag="https://flagcdn.com/w40/fr.png" role="menuitem">
+                    <img class="flag" src="https://flagcdn.com/w40/fr.png" alt=""> Français
+                  </a>
+                  <a class="lang-option" href="#" data-lang="es" data-code="ES" data-flag="https://flagcdn.com/w40/es.png" role="menuitem">
+                    <img class="flag" src="https://flagcdn.com/w40/es.png" alt=""> Español
+                  </a>
+                  <a class="lang-option" href="#" data-lang="de" data-code="DE" data-flag="https://flagcdn.com/w40/de.png" role="menuitem">
+                    <img class="flag" src="https://flagcdn.com/w40/de.png" alt=""> Deutsch
+                  </a>
+                  <a class="lang-option" href="#" data-lang="zh-CN" data-code="中文" data-flag="https://flagcdn.com/w40/cn.png" role="menuitem">
+                    <img class="flag" src="https://flagcdn.com/w40/cn.png" alt=""> 中文
+                  </a>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <!-- ── End Language Switcher ── -->
+
         </div>
       </div>
     </div>
   </div>
+
   <!-- CAROUSEL -->
   <div class="row-fluid">
     <div class="span12">
@@ -170,6 +268,7 @@
     </div>
   </div>
   <hr>
+
   <!-- INTRO + RECENT NEWS -->
   <div class="container-fluid">
     <div class="row-fluid marketing">
@@ -242,6 +341,7 @@
   </div>
   <div class="clearfix"></div>
 </div>
+
 <!-- FOOTER -->
 <footer id="footer">
   <div class="container-fluid">
@@ -269,10 +369,14 @@
     </div>
   </div>
 </footer>
+
 <!-- Scripts -->
 <script src="js/jquery-1.9.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script>$('#main-carousel').carousel();</script>
+
+<!-- Google Translate (hidden engine) -->
+<div id="google_translate_element" style="display:none;"></div>
 <script type="text/javascript">
   function googleTranslateElementInit() {
     new google.translate.TranslateElement({
@@ -283,6 +387,72 @@
   }
 </script>
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<!-- Language Switcher Logic -->
+<script>
+  const langSwitcher = document.getElementById('langSwitcher');
+  const langBtn      = document.getElementById('langBtn');
+  const activeFlagImg  = document.getElementById('activeFlagImg');
+  const activeLangCode = document.getElementById('activeLangCode');
+  const options = document.querySelectorAll('.lang-option');
+
+  // Toggle dropdown open/close
+  langBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const isOpen = langSwitcher.classList.toggle('open');
+    langBtn.setAttribute('aria-expanded', isOpen);
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', function() {
+    langSwitcher.classList.remove('open');
+    langBtn.setAttribute('aria-expanded', 'false');
+  });
+
+  // Language selection
+  options.forEach(function(opt) {
+    opt.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const lang  = this.dataset.lang;
+      const code  = this.dataset.code;
+      const flag  = this.dataset.flag;
+
+      // Update button
+      activeFlagImg.src = flag;
+      activeFlagImg.alt = code;
+      activeLangCode.textContent = code;
+
+      // Update active state
+      options.forEach(o => o.classList.remove('active'));
+      this.classList.add('active');
+
+      // Close dropdown
+      langSwitcher.classList.remove('open');
+      langBtn.setAttribute('aria-expanded', 'false');
+
+      // Trigger Google Translate
+      triggerGoogleTranslate(lang);
+    });
+  });
+
+  function triggerGoogleTranslate(lang) {
+    // Find the Google Translate combo box and change it
+    const tryTranslate = function() {
+      const select = document.querySelector('.goog-te-combo');
+      if (select) {
+        select.value = lang;
+        select.dispatchEvent(new Event('change'));
+      } else {
+        setTimeout(tryTranslate, 300);
+      }
+    };
+    tryTranslate();
+  }
+</script>
+
+<!-- Dark/Light Theme Toggle -->
 <script>
   const toggle = document.getElementById('themeToggle');
   const html = document.documentElement;
