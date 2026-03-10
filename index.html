@@ -459,7 +459,7 @@
   const html = document.documentElement;
   const saved = localStorage.getItem('theme') || 'light';
   if (saved === 'dark') {
-    html.setAttribute('data-theme', 'dark');
+    html.setAttribute('data-theme', 'dark'); 
     toggle.innerHTML = '<span id="themeIcon">☀️</span> Light';
   }
   toggle.addEventListener('click', () => {
