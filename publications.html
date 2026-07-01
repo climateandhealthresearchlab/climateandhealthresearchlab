@@ -91,27 +91,8 @@
       .pub-lede a { color: var(--pub-accent); font-weight: 600; text-decoration: none; }
       .pub-lede a:hover { text-decoration: underline; }
 
-      /* stats strip */
-      .pub-stats {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 26px;
-        padding: 16px 0 20px;
-        border-top: 1px solid var(--pub-border);
-        border-bottom: 1px solid var(--pub-border);
-        margin-bottom: 22px;
-      }
-      .pub-stat .n {
-        font-size: 26px; font-weight: 800; color: var(--pub-title); line-height: 1;
-        letter-spacing: -.01em;
-      }
-      .pub-stat .l {
-        display: block; margin-top: 5px; font-size: 12px; letter-spacing: .04em;
-        text-transform: uppercase; color: var(--pub-muted);
-      }
-
       /* toolbar */
-      .pub-toolbar { margin-bottom: 8px; }
+      .pub-toolbar { margin-bottom: 8px; padding-top: 20px; border-top: 1px solid var(--pub-border); }
       .pub-search {
         position: relative; margin-bottom: 14px;
       }
@@ -386,8 +367,6 @@
             </p>
           </div>
 
-          <div class="pub-stats" id="pubStats"><!-- filled by JS --></div>
-
           <div class="pub-toolbar">
             <div class="pub-search">
               <span class="ic">&#128269;</span>
@@ -457,6 +436,24 @@
        Leave "url" empty for items without an online record.
     ------------------------------------------------------------------ */
     var PUBS = [
+      { year:2026, topic:"heat",
+        title:"A new online tool for assessing local climate heating and heat-related mortality associated with tropical deforestation",
+        authors:["D Spracklen","C Reddington","E Butt","N Doggart","R Rigby","J Baker","C Smith","BFA Oliveira","EI Yamba"],
+        venue:"EGU General Assembly 2026 — conference abstract",
+        url:"https://scholar.google.com/scholar?q=A+new+online+tool+for+assessing+local+climate+heating+and+heat-related+mortality+associated+with+tropical+deforestation" },
+
+      { year:2026, topic:"heat",
+        title:"Rapidly Increasing Hazardous Humid-Heat Exposure Across Africa’s Great Green Wall",
+        authors:["C Tuholske","C Ivanovich","E Williams","R Horton","S Shukla","C Funk","K Andam","C Kibler","E Yamba","A Zimmer","N Brooks"],
+        venue:"EGU General Assembly 2026, EGU26-5992 — conference abstract",
+        url:"https://doi.org/10.5194/egusphere-egu26-5992" },
+
+      { year:2025, topic:"disease",
+        title:"Warming temperatures reduce lifespan and vectorial capacity of Anopheles mosquitoes in Ghana",
+        authors:["EI Yamba","K Badu","TA Kyeimiah","NO Abrokwah","S Asare","MJ Adjei","JA Johnson","LK Amekudzi"],
+        venue:"Infectious Disease Modelling 11 (2), 652-670",
+        url:"https://doi.org/10.1016/j.idm.2025.12.011", oa:true },
+
       { year:2025, topic:"air",
         title:"Spatiotemporal Assessment of PM2.5 in Senior High Schools in Kumasi, Ghana using Low-Cost Sensors",
         authors:["V Owusu-Tawiah","T Annor","EI Yamba","J Nimo","CS Wemegah","CG Hodoli","D Osei-Tutu","D Amponsah","AF Hughes","DM Westervelt"],
@@ -604,7 +601,6 @@
     (function(){
       var listEl   = document.getElementById('pubList');
       var yearsEl  = document.getElementById('pubYears');
-      var statsEl  = document.getElementById('pubStats');
       var searchEl = document.getElementById('pubSearch');
       var clearEl  = document.getElementById('pubClear');
       var emptyEl  = document.getElementById('pubEmpty');
@@ -623,20 +619,6 @@
 
       function haystack(p){
         return (p.title+' '+p.authors.join(' ')+' '+p.venue+' '+p.year+' '+TOPIC_LABEL[p.topic]).toLowerCase();
-      }
-
-      // ---- stats strip (computed, so it stays correct as papers are added) ----
-      function buildStats(){
-        var years = PUBS.map(function(p){return p.year;});
-        var firstAuthor = PUBS.filter(function(p){ return /yamba/i.test(p.authors[0]); }).length;
-        var stats = [
-          { n: PUBS.length, l: "Publications" },
-          { n: Math.min.apply(null,years) + "–" + Math.max.apply(null,years), l: "Years active" },
-          { n: firstAuthor, l: "As lead author" }
-        ];
-        statsEl.innerHTML = stats.map(function(s){
-          return '<div class="pub-stat"><span class="n">'+s.n+'</span><span class="l">'+s.l+'</span></div>';
-        }).join('');
       }
 
       function render(){
@@ -730,7 +712,6 @@
         else { document.documentElement.setAttribute('data-theme','dark'); localStorage.setItem('theme','dark'); }
       });
 
-      buildStats();
       render();
     })();
     </script>
