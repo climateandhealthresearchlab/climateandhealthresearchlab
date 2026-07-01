@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Publications - Climate And Health Research Lab</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Research Lab, Home, Kwame Nkrumah University of Science and Technology">
+    <meta name="description" content="Peer-reviewed publications of the Climate and Health Research Lab, Kwame Nkrumah University of Science and Technology (KNUST), Kumasi, Ghana.">
     <meta name="author" content="">
 
     <!-- Styles -->
@@ -17,11 +17,34 @@
         --bg-color: #ffffff;
         --text-color: #333333;
         --secondary-bg: #f5f5f5;
+
+        /* Publications module tokens (light) */
+        --pub-card: #ffffff;
+        --pub-border: #e7e9ee;
+        --pub-muted: #6a7280;
+        --pub-title: #14213d;
+        --pub-accent: #0e7c66;
+        --pub-accent-soft: #e7f4f0;
+        --pub-hover: #f7f9fa;
+        --pub-chip: #f1f3f6;
+        --pub-chip-fg: #414957;
+        --pub-spine: #e2e6ec;
       }
       [data-theme="dark"] {
         --bg-color: #1a1a1a;
         --text-color: #e0e0e0;
         --secondary-bg: #2d2d2d;
+
+        --pub-card: #222426;
+        --pub-border: #35383d;
+        --pub-muted: #9aa3ad;
+        --pub-title: #eef2f6;
+        --pub-accent: #34d3ad;
+        --pub-accent-soft: #123029;
+        --pub-hover: #2a2d30;
+        --pub-chip: #2c2f33;
+        --pub-chip-fg: #c4ccd6;
+        --pub-spine: #35383d;
       }
       body {
         background-color: var(--bg-color);
@@ -32,6 +55,259 @@
       /* Hide Google Translate banner */
       .skiptranslate { display: none !important; }
       .goog-te-banner-frame { display: none !important; }
+
+      /* ============================================================
+         Publications module
+         ============================================================ */
+      .pub-wrap {
+        max-width: 1060px;
+        margin: 0 auto;
+        padding: 8px 4px 40px;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+      .pub-head { margin: 6px 0 4px; }
+      .pub-eyebrow {
+        text-transform: uppercase;
+        letter-spacing: .16em;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--pub-accent);
+        margin: 0 0 6px;
+      }
+      .pub-wrap h1.pub-title-main {
+        font-size: 34px;
+        line-height: 1.1;
+        margin: 0 0 8px;
+        color: var(--pub-title);
+        font-weight: 800;
+        letter-spacing: -.01em;
+      }
+      .pub-lede {
+        color: var(--pub-muted);
+        font-size: 15px;
+        max-width: 640px;
+        margin: 0 0 18px;
+      }
+      .pub-lede a { color: var(--pub-accent); font-weight: 600; text-decoration: none; }
+      .pub-lede a:hover { text-decoration: underline; }
+
+      /* stats strip */
+      .pub-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 26px;
+        padding: 16px 0 20px;
+        border-top: 1px solid var(--pub-border);
+        border-bottom: 1px solid var(--pub-border);
+        margin-bottom: 22px;
+      }
+      .pub-stat .n {
+        font-size: 26px; font-weight: 800; color: var(--pub-title); line-height: 1;
+        letter-spacing: -.01em;
+      }
+      .pub-stat .l {
+        display: block; margin-top: 5px; font-size: 12px; letter-spacing: .04em;
+        text-transform: uppercase; color: var(--pub-muted);
+      }
+
+      /* toolbar */
+      .pub-toolbar { margin-bottom: 8px; }
+      .pub-search {
+        position: relative; margin-bottom: 14px;
+      }
+      .pub-search input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 12px 40px 12px 40px;
+        font-size: 15px;
+        color: var(--text-color);
+        background: var(--pub-card);
+        border: 1px solid var(--pub-border);
+        border-radius: 10px;
+        outline: none;
+        transition: border-color .15s, box-shadow .15s;
+      }
+      .pub-search input:focus {
+        border-color: var(--pub-accent);
+        box-shadow: 0 0 0 3px var(--pub-accent-soft);
+      }
+      .pub-search .ic {
+        position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+        color: var(--pub-muted); pointer-events: none; font-size: 15px;
+      }
+      .pub-search .clr {
+        position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+        border: 0; background: transparent; color: var(--pub-muted);
+        font-size: 18px; cursor: pointer; padding: 4px 8px; border-radius: 6px;
+        display: none; line-height: 1;
+      }
+      .pub-search .clr:hover { background: var(--pub-hover); color: var(--text-color); }
+
+      .pub-filters {
+        display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+        margin-bottom: 4px;
+      }
+      .pub-filter {
+        border: 1px solid var(--pub-border);
+        background: var(--pub-card);
+        color: var(--pub-chip-fg);
+        padding: 6px 13px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all .15s;
+        display: inline-flex; align-items: center; gap: 7px;
+      }
+      .pub-filter:hover { border-color: var(--pub-accent); color: var(--pub-title); }
+      .pub-filter .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; opacity: .85; }
+      .pub-filter.is-active {
+        background: var(--pub-title);
+        color: var(--bg-color);
+        border-color: var(--pub-title);
+      }
+      .pub-filter.is-active .dot { opacity: 1; }
+      .pub-theme-toggle {
+        margin-left: auto;
+        border: 1px solid var(--pub-border);
+        background: var(--pub-card);
+        color: var(--pub-chip-fg);
+        width: 36px; height: 36px; border-radius: 999px;
+        cursor: pointer; font-size: 15px; line-height: 1;
+        display: inline-flex; align-items: center; justify-content: center;
+        transition: all .15s;
+      }
+      .pub-theme-toggle:hover { border-color: var(--pub-accent); color: var(--pub-title); }
+
+      .pub-layout { display: flex; gap: 34px; align-items: flex-start; margin-top: 24px; }
+
+      /* sticky year nav */
+      .pub-years {
+        position: sticky; top: 16px;
+        flex: 0 0 96px; width: 96px;
+        display: flex; flex-direction: column; gap: 2px;
+      }
+      .pub-years a {
+        display: flex; align-items: baseline; justify-content: space-between;
+        padding: 5px 9px; border-radius: 7px;
+        color: var(--pub-muted); text-decoration: none;
+        font-size: 14px; font-weight: 600;
+        border: 1px solid transparent;
+      }
+      .pub-years a:hover { background: var(--pub-hover); color: var(--pub-title); }
+      .pub-years a .yc { font-size: 11px; font-weight: 700; color: var(--pub-muted); opacity: .7; }
+
+      /* list */
+      .pub-list { flex: 1 1 auto; min-width: 0; }
+      .pub-year-block { margin-bottom: 30px; scroll-margin-top: 16px; }
+      .pub-year-label {
+        display: flex; align-items: center; gap: 12px;
+        margin: 0 0 14px;
+      }
+      .pub-year-label .yr {
+        font-size: 22px; font-weight: 800; color: var(--pub-title); letter-spacing: -.01em;
+      }
+      .pub-year-label .rule { flex: 1 1 auto; height: 1px; background: var(--pub-spine); }
+      .pub-year-label .cnt { font-size: 12px; color: var(--pub-muted); font-weight: 600; }
+
+      .pub-item {
+        position: relative;
+        background: var(--pub-card);
+        border: 1px solid var(--pub-border);
+        border-radius: 12px;
+        padding: 16px 18px 15px;
+        margin-bottom: 12px;
+        transition: border-color .15s, box-shadow .15s, transform .15s;
+      }
+      .pub-item:hover {
+        border-color: var(--pub-accent);
+        box-shadow: 0 6px 20px -12px rgba(0,0,0,.35);
+        transform: translateY(-1px);
+      }
+      .pub-item .pt {
+        display: block;
+        font-size: 16px;
+        line-height: 1.35;
+        font-weight: 700;
+        color: var(--pub-title);
+        text-decoration: none;
+        margin-bottom: 6px;
+      }
+      .pub-item .pt:hover { color: var(--pub-accent); }
+      .pub-item .pa {
+        font-size: 13.5px; color: var(--pub-muted); line-height: 1.5; margin-bottom: 3px;
+      }
+      .pub-item .pa .me { color: var(--pub-accent); font-weight: 700; }
+      .pub-item .pv {
+        font-size: 13px; color: var(--pub-title); font-style: italic; opacity: .85;
+      }
+      .pub-meta {
+        display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+        margin-top: 11px;
+      }
+      .tag {
+        font-size: 11.5px; font-weight: 700; letter-spacing: .01em;
+        padding: 3px 9px; border-radius: 999px;
+        background: var(--tag-bg, var(--pub-chip));
+        color: var(--tag-fg, var(--pub-chip-fg));
+      }
+      .pub-links { margin-left: auto; display: inline-flex; gap: 8px; align-items: center; }
+      .pub-links a {
+        font-size: 12.5px; font-weight: 700; text-decoration: none;
+        color: var(--pub-accent);
+        border: 1px solid var(--pub-border);
+        padding: 4px 10px; border-radius: 7px;
+        transition: all .15s;
+        white-space: nowrap;
+      }
+      .pub-links a:hover { background: var(--pub-accent-soft); border-color: var(--pub-accent); }
+      .oa {
+        font-size: 11px; font-weight: 800; letter-spacing: .03em;
+        color: #0a7d55; border: 1px solid #b7e2cf; background: #eafaf2;
+        padding: 3px 7px; border-radius: 6px;
+      }
+      [data-theme="dark"] .oa { color: #6fe6b2; border-color: #1f5540; background: #10251d; }
+
+      .pub-empty {
+        display: none; text-align: center; padding: 40px 20px; color: var(--pub-muted);
+      }
+      .pub-empty b { color: var(--pub-title); }
+
+      /* topic palette (light) */
+      .topic-climate  { --tag-bg:#d9f0ea; --tag-fg:#0a5c4d; }
+      .topic-disease  { --tag-bg:#ece0fb; --tag-fg:#5b2c9e; }
+      .topic-heat     { --tag-bg:#fde6cf; --tag-fg:#9a4d0c; }
+      .topic-floods   { --tag-bg:#d9e8fb; --tag-fg:#1f4f8f; }
+      .topic-air      { --tag-bg:#fbdde2; --tag-fg:#993049; }
+      .topic-data     { --tag-bg:#dcefdc; --tag-fg:#2c6b34; }
+      /* topic palette (dark) */
+      [data-theme="dark"] .topic-climate { --tag-bg:#0e332c; --tag-fg:#5fe0c4; }
+      [data-theme="dark"] .topic-disease { --tag-bg:#281b3f; --tag-fg:#c4a5f5; }
+      [data-theme="dark"] .topic-heat    { --tag-bg:#3a2410; --tag-fg:#f0ad6b; }
+      [data-theme="dark"] .topic-floods  { --tag-bg:#132a44; --tag-fg:#7db4f0; }
+      [data-theme="dark"] .topic-air     { --tag-bg:#3a1922; --tag-fg:#f090a5; }
+      [data-theme="dark"] .topic-data    { --tag-bg:#16331a; --tag-fg:#7fd487; }
+      /* filter-pill colored dots */
+      .fdot-climate { color:#0e9a80; } .fdot-disease { color:#7b46c9; }
+      .fdot-heat { color:#d9741f; } .fdot-floods { color:#2f6fc4; }
+      .fdot-air { color:#c14a63; } .fdot-data { color:#3f9a48; }
+
+      @media (max-width: 720px) {
+        .pub-layout { flex-direction: column; gap: 4px; }
+        .pub-years {
+          position: static; width: 100%; flex-basis: auto;
+          flex-direction: row; flex-wrap: wrap; gap: 6px; margin-bottom: 18px;
+        }
+        .pub-years a { border: 1px solid var(--pub-border); padding: 5px 10px; }
+        .pub-wrap h1.pub-title-main { font-size: 27px; }
+        .pub-links { margin-left: 0; width: 100%; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .pub-item, .pub-item:hover { transition: none; transform: none; }
+      }
+      .pub-item { animation: pubfade .35s ease both; }
+      @media (prefers-reduced-motion: reduce) { .pub-item { animation: none; } }
+      @keyframes pubfade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
     </style>
 
     <!-- Apply saved theme immediately to avoid flash -->
@@ -58,7 +334,6 @@
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script>
-      // Suppress Google Translate top bar
       window.addEventListener('load', function() {
         var style = document.createElement('style');
         style.innerHTML = 'body { top: 0 !important; } .skiptranslate { display: none !important; }';
@@ -98,174 +373,50 @@
 
         <hr>
 
-        <!-- Main Content -->
-        <div class="row-fluid">
-            <!-- Sidebar -->
-            <div class="span3 bs-docs-sidebar" id="navparent">
-                <ul class="nav nav-list bs-docs-sidenav" data-spy="affix" data-offset-top="200" data-offset-bottom="260">
-                    <li><a href="#2025">2025</a></li>
-                    <li><a href="#2024">2024</a></li>
-                    <li><a href="#2023">2023</a></li>
-                    <li><a href="#2022">2022</a></li>
-                    <li><a href="#2021">2021</a></li>
-                    <li><a href="#2020">2020</a></li>
-                    <li><a href="#2019">2019</a></li>
-                    <li><a href="#2018">2018</a></li>
-                    <li><a href="#2016">2016</a></li>
-                    <li><a href="#2015">2015</a></li>
-                </ul>
+        <!-- ============ Publications ============ -->
+        <div class="pub-wrap">
+          <div class="pub-head">
+            <p class="pub-eyebrow">Climate &amp; Health Research Lab · KNUST</p>
+            <h1 class="pub-title-main">Publications</h1>
+            <p class="pub-lede">
+              Peer-reviewed research spanning climate modelling, malaria and vector-borne disease,
+              extreme heat, floods and hydrology, and air quality across West Africa. Every title links
+              to the paper of record. Full profile on
+              <a href="https://scholar.google.com/citations?user=ciRef64AAAAJ" target="_blank" rel="noopener">Google Scholar</a>.
+            </p>
+          </div>
+
+          <div class="pub-stats" id="pubStats"><!-- filled by JS --></div>
+
+          <div class="pub-toolbar">
+            <div class="pub-search">
+              <span class="ic">&#128269;</span>
+              <input id="pubSearch" type="text" placeholder="Search titles, authors, journals, topics…"
+                     aria-label="Search publications" autocomplete="off">
+              <button class="clr" id="pubClear" aria-label="Clear search">&times;</button>
             </div>
-
-            <!-- Publications Section -->
-            <div class="span8 offset1">
-                <section id="publications" class="container my-5">
-                    <h2 class="mb-4">Publications</h2>
-
-                    <!-- ====== 2025 ====== -->
-                    <h3 id="2025" class="mt-4">2025</h3>
-                    <ul>
-                        <li><b>Spatiotemporal Assessment of PM2.5 in Senior High Schools in Kumasi, Ghana using Low-Cost Sensors</b><br>
-                            V Owusu-Tawiah, T Annor, <b style="color:#006BFF;">EI Yamba</b>, J Nimo, CS Wemegah, CG Hodoli, ...<br>
-                            <i>Aerosol and Air Quality Research 25 (12), 66</i>
-                        </li>
-                        <li><b>Flood Early Warning Systems in the White Volta Basin, Ghana: Challenges and Opportunities</b><br>
-                            JT Katsekpor, K Greve, <b style="color:#006BFF;">EI Yamba</b>, EG Amoah<br>
-                            <i>Journal of Flood Risk Management 18 (4), e70146</i>
-                        </li>
-                        <li><b>Assessing heat-related health risk in Ghana using bioclimatic indices</b><br>
-                            MJ Adjei, <b style="color:#006BFF;">EI Yamba</b>, C Tuholske, CS Wemegah, LK Amekudzi<br>
-                            <i>Scientific African, e02926</i>
-                        </li>
-                        <li><b>Evidence of heatwaves: characteristics and trends in selected Ghanaian cities</b><br>
-                            CS Wemegah, <b style="color:#006BFF;">EI Yamba</b>, E Quansah, EK Nyantakyi, LK Amekudzi<br>
-                            <i>International Journal of Climatology 45 (10), e8889</i>
-                        </li>
-                        <li><b>Trends and advances in image-based mosquito identification and classification using machine learning models: A systematic review</b><br>
-                            AB Lakyiere, RMOG Mensah, NY Agbenor-Efunam, <b style="color:#006BFF;">E Yamba</b>, K Badu<br>
-                            <i>Computers in Biology and Medicine 193, 110373</i>
-                        </li>
-                    </ul>
-
-                    <!-- ====== 2024 ====== -->
-                    <h3 id="2024" class="mt-4">2024</h3>
-                    <ul>
-                        <li><b>Comparative analysis of satellite and reanalysis data with ground-based observations in northern Ghana</b><br>
-                            JT Katsekpor, K Greve, <b style="color:#006BFF;">EI Yamba</b>, EG Amoah<br>
-                            <i>Meteorological Applications 31 (4), e2226</i>
-                        </li>
-                        <li><b>Modelling atmospheric behaviour over southern West Africa using RegCM 4.7.1…</b><br>
-                            JNA Aryee, EM Attoh, <b style="color:#006BFF;">EI Yamba</b>, P Davies, LK Amekudzi<br>
-                            <i>Scientific African 24, e02187</i>
-                        </li>
-                        <li><b>The effect of explicit convection on simulated malaria transmission across Africa</b><br>
-                            J Talib, AA Abatan, R HoekSpaans, <b style="color:#006BFF;">EI Yamba</b>, TS Egbebiyi, ...<br>
-                            <i>PLoS One 19 (4), e0297744</i>
-                        </li>
-                        <li><b>Bias-corrected NASA data for aridity index estimation over tropical climates in Ghana</b><br>
-                            PJ Asilevi, F Dogbey, P Boakye, JNA Aryee, <b style="color:#006BFF;">EI Yamba</b>, ...<br>
-                            <i>Journal of Hydrology: Regional Studies 51, 101610</i>
-                        </li>
-                    </ul>
-
-                    <!-- ====== 2023 ====== -->
-                    <h3 id="2023" class="mt-4">2023</h3>
-                    <ul>
-                        <li><b>The climate and environmental determinants of domestic water supply change...</b><br>
-                            J Tetteh, D Aboagye, <b style="color:#006BFF;">EI Yamba</b>, ...<br>
-                            <i>EarthArXiv</i>
-                        </li>
-                        <li><b>Climate drivers of malaria transmission seasonality and their relative importance in sub-Saharan Africa</b><br>
-                            <b style="color:#006BFF;">EI Yamba</b>, AH Fink, K Badu, EO Asare, AM Tompkins, LK Amekudzi<br>
-                            <i>GeoHealth 7 (2), e2022GH000698</i>
-                        </li>
-                        <li><b>Revisiting the agro-climatic zones of Ghana</b><br>
-                            <b style="color:#006BFF;">EI Yamba</b>, JNA Aryee, E Quansah, P Davies, CS Wemegah, ...<br>
-                            <i>PLOS Climate 2 (1), e0000023</i>
-                        </li>
-                    </ul>
-
-                    <!-- ====== 2022 ====== -->
-                    <h3 id="2022" class="mt-4">2022</h3>
-                    <ul>
-                        <li><b>Mechanisms of rainfall biases in two CORDEX-CORE regional climate models…</b><br>
-                            AT Tamoffo, LK Amekudzi, T Weber, DA Vondou, <b style="color:#006BFF;">EI Yamba</b>, D Jacob<br>
-                            <i>Journal of Climate 35 (2), 639-668</i>
-                        </li>
-                        <li><b>Reviewing the Past, Present, and Future Risks of Pathogens in Ghana</b><br>
-                            PNJ Mahama, AT Kabo-Bah, JI Blanford, <b style="color:#006BFF;">EI Yamba</b>, P Antwi-Agyei<br>
-                            <i>Journal of Tropical Medicine 2022, 4589007</i>
-                        </li>
-                        <li><b>Assessment of Trends and Distribution of Future Climate Projections in West Africa</b><br>
-                            JNA Aryee, <b style="color:#006BFF;">EI Yamba</b>, E Quansah, LK Amekudzi<br>
-                            <i>AMS Abstracts 102, 271</i>
-                        </li>
-                    </ul>
-
-                    <!-- ====== 2021 ====== -->
-                    <h3 id="2021" class="mt-4">2021</h3>
-                    <ul>
-                        <li><b>Low-Level Cloud Development and Diurnal Cycle in Southern West Africa</b><br>
-                            JNA Aryee, LK Amekudzi, <b style="color:#006BFF;">EI Yamba</b><br>
-                            <i>Journal of Geophysical Research: Atmospheres 126 (11)</i>
-                        </li>
-                        <li><b>Estimation of the return periods of maxima rainfall and floods at the Pra River Catchment</b><br>
-                            MA Osei, LK Amekudzi, AY Omari-Sasu, <b style="color:#006BFF;">EI Yamba</b>, ...<br>
-                            <i>Heliyon 7 (5)</i>
-                        </li>
-                    </ul>
-
-                    <!-- ====== 2020 ====== -->
-                    <h3 id="2020" class="mt-4">2020</h3>
-                    <ul>
-                        <li><b>Assessment of urban heat island warming in Greater Accra</b><br>
-                            CS Wemegah, <b style="color:#006BFF;">EI Yamba</b>, JNA Aryee, F Sam, LK Amekudzi<br>
-                            <i>Scientific African 8, e00426</i>
-                        </li>
-                        <li><b>Monthly entomological inoculation rate data for malaria transmission in Africa</b><br>
-                            <b style="color:#006BFF;">EI Yamba</b>, AM Tompkins, AH Fink, V Ermert, ...<br>
-                            <i>Data 5 (2), 31</i>
-                        </li>
-                    </ul>
-
-                    <!-- ====== 2019 ====== -->
-                    <h3 id="2019" class="mt-4">2019</h3>
-                    <ul>
-                        <li><b>Modelled and observed mean and seasonal relationships… Cameroon</b><br>
-                            AD Mbouna, AM Tompkins, A Lenouo, EO Asare, <b style="color:#006BFF;">EI Yamba</b>, ...<br>
-                            <i>Malaria Journal 18 (1), 359</i>
-                        </li>
-                    </ul>
-
-                    <!-- ====== 2018 ====== -->
-                    <h3 id="2018" class="mt-4">2018</h3>
-                    <ul>
-                        <li><b>Monthly entomological inoculation rates for malaria seasonality studies</b><br>
-                            <b style="color:#006BFF;">EI Yamba</b>, AM Tompkins, AH Fink, V Ermert, A Djouda, LK Amekudzi<br>
-                            <i>PANGAEA Dataset</i>
-                        </li>
-                    </ul>
-
-                    <!-- ====== 2016 ====== -->
-                    <h3 id="2016" class="mt-4">2016</h3>
-                    <ul>
-                        <li><b>Improvement and validation of dynamical malaria models in Africa</b><br>
-                            <b style="color:#006BFF;">EI Yamba</b><br>
-                            <i>University of Cologne (PhD Thesis)</i>
-                        </li>
-                    </ul>
-
-                    <!-- ====== 2015 ====== -->
-                    <h3 id="2015" class="mt-4">2015</h3>
-                    <ul>
-                        <li><b>Variabilities in rainfall onset, cessation and rainy season… Ghana</b><br>
-                            LK Amekudzi, <b style="color:#006BFF;">EI Yamba</b>, K Preko, EO Asare, J Aryee, M Baidu<br>
-                            <i>Climate 3 (2), 416-434</i>
-                        </li>
-                    </ul>
-
-                </section>
+            <div class="pub-filters" id="pubFilters">
+              <button class="pub-filter is-active" data-topic="all">All</button>
+              <button class="pub-filter" data-topic="climate"><span class="dot fdot-climate"></span>Climate &amp; Modelling</button>
+              <button class="pub-filter" data-topic="disease"><span class="dot fdot-disease"></span>Disease &amp; Vectors</button>
+              <button class="pub-filter" data-topic="heat"><span class="dot fdot-heat"></span>Heat &amp; Health</button>
+              <button class="pub-filter" data-topic="floods"><span class="dot fdot-floods"></span>Floods &amp; Hydrology</button>
+              <button class="pub-filter" data-topic="air"><span class="dot fdot-air"></span>Air Quality</button>
+              <button class="pub-filter" data-topic="data"><span class="dot fdot-data"></span>Data &amp; Methods</button>
+              <button class="pub-theme-toggle" id="pubTheme" aria-label="Toggle dark mode" title="Toggle dark mode">&#9681;</button>
             </div>
+          </div>
+
+          <div class="pub-layout">
+            <nav class="pub-years" id="pubYears" aria-label="Jump to year"></nav>
+            <div class="pub-list" id="pubList"></div>
+          </div>
+
+          <div class="pub-empty" id="pubEmpty">
+            No publications match <b id="pubEmptyTerm"></b>. Try a different keyword or clear the filters.
+          </div>
         </div>
+
     </div>
 
     <!-- Footer -->
@@ -298,10 +449,290 @@
     <!-- Scripts -->
     <script src="js/jquery-1.9.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+
     <script>
-      $(document).ready(function() {
-        $(document.body).scrollspy({ target: "#navparent" });
+    /* ------------------------------------------------------------------
+       Publications data.  To add a paper, copy a block and fill it in.
+       topic ∈ climate | disease | heat | floods | air | data
+       Leave "url" empty for items without an online record.
+    ------------------------------------------------------------------ */
+    var PUBS = [
+      { year:2025, topic:"air",
+        title:"Spatiotemporal Assessment of PM2.5 in Senior High Schools in Kumasi, Ghana using Low-Cost Sensors",
+        authors:["V Owusu-Tawiah","T Annor","EI Yamba","J Nimo","CS Wemegah","CG Hodoli","D Osei-Tutu","D Amponsah","AF Hughes","DM Westervelt"],
+        venue:"Aerosol and Air Quality Research 25 (12), 66",
+        url:"https://doi.org/10.1007/s44408-025-00066-2", oa:true },
+
+      { year:2025, topic:"floods",
+        title:"Flood Early Warning Systems in the White Volta Basin, Ghana: Challenges and Opportunities",
+        authors:["JT Katsekpor","K Greve","EI Yamba","EG Amoah"],
+        venue:"Journal of Flood Risk Management 18 (4), e70146",
+        url:"https://doi.org/10.1111/jfr3.70146" },
+
+      { year:2025, topic:"heat",
+        title:"Assessing heat-related health risk in Ghana using bioclimatic indices",
+        authors:["MJ Adjei","EI Yamba","C Tuholske","CS Wemegah","LK Amekudzi"],
+        venue:"Scientific African 30, e02926",
+        url:"https://doi.org/10.1016/j.sciaf.2025.e02926", oa:true },
+
+      { year:2025, topic:"heat",
+        title:"Evidence of heatwaves: characteristics and trends in selected Ghanaian cities",
+        authors:["CS Wemegah","EI Yamba","E Quansah","EK Nyantakyi","LK Amekudzi"],
+        venue:"International Journal of Climatology 45 (10), e8889",
+        url:"https://doi.org/10.1002/joc.8889" },
+
+      { year:2025, topic:"disease",
+        title:"Trends and advances in image-based mosquito identification and classification using machine learning models: A systematic review",
+        authors:["AB Lakyiere","RMOG Mensah","NY Agbenor-Efunam","E Yamba","K Badu"],
+        venue:"Computers in Biology and Medicine 193, 110373",
+        url:"https://doi.org/10.1016/j.compbiomed.2025.110373" },
+
+      { year:2024, topic:"climate",
+        title:"Comparative analysis of satellite and reanalysis data with ground-based observations in Northern Ghana",
+        authors:["JT Katsekpor","K Greve","EI Yamba","EG Amoah"],
+        venue:"Meteorological Applications 31 (4), e2226",
+        url:"https://doi.org/10.1002/met.2226" },
+
+      { year:2024, topic:"climate",
+        title:"Modelling atmospheric behaviour over southern West Africa using RegCM 4.7.1: Case assessment of relative humidity and zonal wind profiles based on the 2016 DACCIWA summertime field campaign",
+        authors:["JNA Aryee","EMNAN Attoh","EI Yamba","P Davies","LK Amekudzi"],
+        venue:"Scientific African 24, e02187",
+        url:"https://doi.org/10.1016/j.sciaf.2024.e02187", oa:true },
+
+      { year:2024, topic:"disease",
+        title:"The effect of explicit convection on simulated malaria transmission across Africa",
+        authors:["J Talib","AA Abatan","R HoekSpaans","EI Yamba","TS Egbebiyi","C Caminade","A Jones","CE Birch","OM Olagbegi","AP Morse"],
+        venue:"PLOS One 19 (4), e0297744",
+        url:"https://doi.org/10.1371/journal.pone.0297744", oa:true },
+
+      { year:2024, topic:"floods",
+        title:"Bias-corrected NASA data for aridity index estimation over tropical climates in Ghana, West Africa",
+        authors:["PJ Asilevi","F Dogbey","P Boakye","JNA Aryee","EI Yamba","SY Owusu","DK Peprah","E Quansah","NAB Klutse","LK Amekudzi"],
+        venue:"Journal of Hydrology: Regional Studies 51, 101610",
+        url:"https://doi.org/10.1016/j.ejrh.2023.101610", oa:true },
+
+      { year:2023, topic:"floods",
+        title:"The climate and environmental determinants of domestic water supply change in sub-Saharan Africa (preprint)",
+        authors:["J Tetteh","D Aboagye","EI Yamba"],
+        venue:"EarthArXiv — preprint",
+        url:"https://scholar.google.com/scholar?q=climate+environmental+determinants+domestic+water+supply+Yamba" },
+
+      { year:2023, topic:"disease",
+        title:"Climate drivers of malaria transmission seasonality and their relative importance in sub-Saharan Africa",
+        authors:["EI Yamba","AH Fink","K Badu","EO Asare","AM Tompkins","LK Amekudzi"],
+        venue:"GeoHealth 7 (2), e2022GH000698",
+        url:"https://doi.org/10.1029/2022GH000698", oa:true },
+
+      { year:2023, topic:"climate",
+        title:"Revisiting the agro-climatic zones of Ghana: A re-classification in conformity with climate change and variability",
+        authors:["EI Yamba","JNA Aryee","E Quansah","P Davies","CS Wemegah","MA Osei","MA Ahiataku","LK Amekudzi"],
+        venue:"PLOS Climate 2 (1), e0000023",
+        url:"https://doi.org/10.1371/journal.pclm.0000023", oa:true },
+
+      { year:2022, topic:"climate",
+        title:"Mechanisms of rainfall biases in two CORDEX-CORE regional climate models at rainfall peaks over Central Equatorial Africa",
+        authors:["AT Tamoffo","LK Amekudzi","T Weber","DA Vondou","EI Yamba","D Jacob"],
+        venue:"Journal of Climate 35 (2), 639-668",
+        url:"https://doi.org/10.1175/JCLI-D-21-0487.1" },
+
+      { year:2022, topic:"disease",
+        title:"Reviewing the Past, Present, and Future Risks of Pathogens in Ghana and What This Means for Rethinking Infectious Disease Surveillance for Sub-Saharan Africa",
+        authors:["PNJ Mahama","AT Kabo-Bah","JI Blanford","EI Yamba","P Antwi-Agyei"],
+        venue:"Journal of Tropical Medicine 2022, 4589007",
+        url:"https://doi.org/10.1155/2022/4589007", oa:true },
+
+      { year:2022, topic:"climate",
+        title:"Assessment of Trends and Distribution of Future Climate Projections in West Africa",
+        authors:["JNA Aryee","EI Yamba","E Quansah","LK Amekudzi"],
+        venue:"AMS Annual Meeting — conference abstract",
+        url:"https://scholar.google.com/scholar?q=Assessment+of+Trends+and+Distribution+of+Future+Climate+Projections+in+West+Africa+Aryee+Yamba" },
+
+      { year:2021, topic:"climate",
+        title:"Low-Level Cloud Development and Diurnal Cycle in Southern West Africa During the DACCIWA Field Campaign: Case Study of Kumasi Supersite, Ghana",
+        authors:["JNA Aryee","LK Amekudzi","EI Yamba"],
+        venue:"Journal of Geophysical Research: Atmospheres 126 (11), e2020JD034028",
+        url:"https://doi.org/10.1029/2020JD034028" },
+
+      { year:2021, topic:"floods",
+        title:"Estimation of the return periods of maxima rainfall and floods at the Pra River Catchment, Ghana, using the Gumbel extreme value theory",
+        authors:["MA Osei","LK Amekudzi","AY Omari-Sasu","EI Yamba","E Quansah","JNA Aryee","K Preko"],
+        venue:"Heliyon 7 (5), e06980",
+        url:"https://doi.org/10.1016/j.heliyon.2021.e06980", oa:true },
+
+      { year:2020, topic:"heat",
+        title:"Assessment of urban heat island warming in the Greater Accra Region",
+        authors:["CS Wemegah","EI Yamba","JNA Aryee","F Sam","LK Amekudzi"],
+        venue:"Scientific African 8, e00426",
+        url:"https://doi.org/10.1016/j.sciaf.2020.e00426", oa:true },
+
+      { year:2020, topic:"data",
+        title:"Monthly Entomological Inoculation Rate Data for Studying the Seasonality of Malaria Transmission in Africa",
+        authors:["EI Yamba","AM Tompkins","AH Fink","V Ermert","MD Amelie","LK Amekudzi","OJT Briët"],
+        venue:"Data 5 (2), 31",
+        url:"https://doi.org/10.3390/data5020031", oa:true },
+
+      { year:2019, topic:"disease",
+        title:"Modelled and observed mean and seasonal relationships between climate, population density and malaria indicators in Cameroon",
+        authors:["AD Mbouna","AM Tompkins","A Lenouo","EO Asare","EI Yamba","C Tchawoua"],
+        venue:"Malaria Journal 18 (1), 359",
+        url:"https://doi.org/10.1186/s12936-019-2991-8", oa:true },
+
+      { year:2018, topic:"data",
+        title:"Monthly entomological inoculation rates for studying malaria transmission seasonality in Africa (Dataset)",
+        authors:["EI Yamba","AM Tompkins","AH Fink","V Ermert","A Djouda","LK Amekudzi","OJT Briët"],
+        venue:"PANGAEA Dataset",
+        url:"https://doi.org/10.1594/PANGAEA.892682", oa:true },
+
+      { year:2016, topic:"disease",
+        title:"Improvement and validation of dynamical malaria models in Africa",
+        authors:["EI Yamba"],
+        venue:"University of Cologne — PhD Thesis",
+        url:"https://scholar.google.com/scholar?q=Improvement+and+validation+of+dynamical+malaria+models+in+Africa+Yamba" },
+
+      { year:2015, topic:"climate",
+        title:"Variabilities in rainfall onset, cessation and length of rainy season for the various agro-ecological zones of Ghana",
+        authors:["LK Amekudzi","EI Yamba","K Preko","EO Asare","J Aryee","M Baidu","SNA Codjoe"],
+        venue:"Climate 3 (2), 416-434",
+        url:"https://doi.org/10.3390/cli3020416", oa:true }
+    ];
+
+    var TOPIC_LABEL = {
+      climate:"Climate & Modelling", disease:"Disease & Vectors", heat:"Heat & Health",
+      floods:"Floods & Hydrology", air:"Air Quality", data:"Data & Methods"
+    };
+
+    (function(){
+      var listEl   = document.getElementById('pubList');
+      var yearsEl  = document.getElementById('pubYears');
+      var statsEl  = document.getElementById('pubStats');
+      var searchEl = document.getElementById('pubSearch');
+      var clearEl  = document.getElementById('pubClear');
+      var emptyEl  = document.getElementById('pubEmpty');
+      var emptyTerm= document.getElementById('pubEmptyTerm');
+      var filterWrap = document.getElementById('pubFilters');
+
+      var activeTopic = 'all';
+
+      function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+      function renderAuthors(list){
+        return list.map(function(a){
+          return /yamba/i.test(a) ? '<span class="me">'+esc(a)+'</span>' : esc(a);
+        }).join(', ');
+      }
+
+      function haystack(p){
+        return (p.title+' '+p.authors.join(' ')+' '+p.venue+' '+p.year+' '+TOPIC_LABEL[p.topic]).toLowerCase();
+      }
+
+      // ---- stats strip (computed, so it stays correct as papers are added) ----
+      function buildStats(){
+        var years = PUBS.map(function(p){return p.year;});
+        var firstAuthor = PUBS.filter(function(p){ return /yamba/i.test(p.authors[0]); }).length;
+        var stats = [
+          { n: PUBS.length, l: "Publications" },
+          { n: Math.min.apply(null,years) + "–" + Math.max.apply(null,years), l: "Years active" },
+          { n: firstAuthor, l: "As lead author" }
+        ];
+        statsEl.innerHTML = stats.map(function(s){
+          return '<div class="pub-stat"><span class="n">'+s.n+'</span><span class="l">'+s.l+'</span></div>';
+        }).join('');
+      }
+
+      function render(){
+        var term = searchEl.value.trim().toLowerCase();
+        clearEl.style.display = term ? 'block' : 'none';
+
+        var rows = PUBS.filter(function(p){
+          var okTopic = (activeTopic === 'all') || (p.topic === activeTopic);
+          var okTerm  = !term || haystack(p).indexOf(term) !== -1;
+          return okTopic && okTerm;
+        });
+
+        // group by year desc
+        var byYear = {};
+        rows.forEach(function(p){ (byYear[p.year] = byYear[p.year] || []).push(p); });
+        var yearKeys = Object.keys(byYear).map(Number).sort(function(a,b){return b-a;});
+
+        // year nav (always shows all years present in filtered set)
+        yearsEl.innerHTML = yearKeys.map(function(y){
+          return '<a href="#y'+y+'">'+y+'<span class="yc">'+byYear[y].length+'</span></a>';
+        }).join('');
+
+        // list
+        listEl.innerHTML = yearKeys.map(function(y){
+          var items = byYear[y].map(function(p){
+            var links = '';
+            if (p.url){
+              var label = /pangaea/i.test(p.venue) ? 'Dataset' :
+                          /preprint|abstract|thesis/i.test(p.venue) ? 'View' : 'DOI';
+              links += '<a href="'+p.url+'" target="_blank" rel="noopener">'+label+' &#8599;</a>';
+            }
+            var oa = p.oa ? '<span class="oa">OPEN ACCESS</span>' : '';
+            var titleHtml = p.url
+              ? '<a class="pt" href="'+p.url+'" target="_blank" rel="noopener">'+esc(p.title)+'</a>'
+              : '<span class="pt">'+esc(p.title)+'</span>';
+            return ''+
+              '<div class="pub-item">'+
+                titleHtml+
+                '<div class="pa">'+renderAuthors(p.authors)+'</div>'+
+                '<div class="pv">'+esc(p.venue)+'</div>'+
+                '<div class="pub-meta">'+
+                  '<span class="tag topic-'+p.topic+'">'+TOPIC_LABEL[p.topic]+'</span>'+
+                  oa+
+                  '<span class="pub-links">'+links+'</span>'+
+                '</div>'+
+              '</div>';
+          }).join('');
+          return ''+
+            '<section class="pub-year-block" id="y'+y+'">'+
+              '<div class="pub-year-label"><span class="yr">'+y+'</span>'+
+                '<span class="rule"></span>'+
+                '<span class="cnt">'+byYear[y].length+' paper'+(byYear[y].length>1?'s':'')+'</span>'+
+              '</div>'+
+              items+
+            '</section>';
+        }).join('');
+
+        var none = rows.length === 0;
+        emptyEl.style.display = none ? 'block' : 'none';
+        listEl.style.display  = none ? 'none' : 'block';
+        if (none){
+          emptyTerm.textContent = term ? '“'+searchEl.value.trim()+'”'
+                                       : 'this filter';
+        }
+      }
+
+      // events
+      searchEl.addEventListener('input', render);
+      clearEl.addEventListener('click', function(){ searchEl.value=''; render(); searchEl.focus(); });
+      filterWrap.querySelectorAll('.pub-filter').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          filterWrap.querySelectorAll('.pub-filter').forEach(function(b){ b.classList.remove('is-active'); });
+          btn.classList.add('is-active');
+          activeTopic = btn.getAttribute('data-topic');
+          render();
+        });
       });
+
+      // smooth scroll for year nav
+      yearsEl.addEventListener('click', function(e){
+        var a = e.target.closest('a'); if(!a) return;
+        e.preventDefault();
+        var el = document.querySelector(a.getAttribute('href'));
+        if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+      });
+
+      // theme toggle (uses the same localStorage key the site already reads)
+      document.getElementById('pubTheme').addEventListener('click', function(){
+        var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if (dark){ document.documentElement.removeAttribute('data-theme'); localStorage.setItem('theme','light'); }
+        else { document.documentElement.setAttribute('data-theme','dark'); localStorage.setItem('theme','dark'); }
+      });
+
+      buildStats();
+      render();
+    })();
     </script>
 </body>
 </html>
