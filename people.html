@@ -15,6 +15,11 @@
       <!-- Leaflet CSS -->
       <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
+      <!-- Squad display font -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+
       <style>
         :root {
           --bg-color: #ffffff;
@@ -63,6 +68,176 @@
         .alumni-popup p {
             margin: 4px 0;
             font-size: 13px;
+        }
+
+        /* =========================================================
+           SQUAD / MATCHDAY LINEUP
+           ========================================================= */
+        .sq-pitch {
+          position: relative;
+          margin: 20px 0 10px;
+          padding: 30px 18px 38px;
+          border-radius: 16px;
+          background:
+            repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 64px, rgba(0,0,0,.05) 64px 128px),
+            linear-gradient(165deg, #0e7a45 0%, #0a5c34 60%, #094e2c 100%);
+          box-shadow: inset 0 0 70px rgba(0,0,0,.28), 0 14px 34px -16px rgba(0,0,0,.45);
+          overflow: hidden;
+        }
+        .sq-pitch::before {                    /* pitch boundary line */
+          content: ""; position: absolute; inset: 12px;
+          border: 2px solid rgba(255,255,255,.16);
+          border-radius: 12px; pointer-events: none; z-index: 1;
+        }
+        .sq-crest {                            /* faint centre crest */
+          position: absolute; top: 40px; left: 50%; transform: translateX(-50%);
+          width: 240px; height: 240px; opacity: .07; z-index: 0; pointer-events: none;
+          background: url('images/lablogo.png') center/contain no-repeat;
+          filter: grayscale(1) brightness(0) invert(1);
+        }
+
+        .sq-line { position: relative; z-index: 2; margin-top: 30px; }
+        .sq-line:first-of-type { margin-top: 4px; }
+        .sq-linehead {
+          text-align: center; margin: 0 0 18px;
+        }
+        .sq-linehead span {
+          display: inline-block; padding: 0 2px 7px;
+          font-family: 'Oswald', sans-serif; font-weight: 600; letter-spacing: .2em;
+          text-transform: uppercase; font-size: 13px; color: #eafff4;
+          border-bottom: 2px solid rgba(255,255,255,.4);
+        }
+
+        /* ---- Captain (PI) ---- */
+        .sq-captain-slot { display: flex; justify-content: center; }
+        .sq-captain {
+          display: flex; gap: 22px; align-items: center;
+          width: min(690px, 100%);
+          background: linear-gradient(160deg, #10403a, #0b2726);
+          border: 1px solid rgba(242,193,78,.5);
+          border-radius: 16px; padding: 20px;
+          box-shadow: 0 14px 34px -18px rgba(0,0,0,.7), inset 0 0 0 1px rgba(255,255,255,.03);
+          position: relative; overflow: hidden;
+        }
+        .sq-captain::after {                   /* gold sheen */
+          content: ""; position: absolute; top: 0; left: -35%; width: 45%; height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(242,193,78,.14), transparent);
+          transform: skewX(-18deg); pointer-events: none;
+        }
+        .sq-cap-photo { position: relative; flex: 0 0 auto; z-index: 1; }
+        .sq-cap-photo img {
+          width: 152px; height: 190px; object-fit: cover; border-radius: 12px;
+          border: 2px solid rgba(242,193,78,.65);
+          box-shadow: 0 6px 16px -6px rgba(0,0,0,.6);
+        }
+        .sq-armband {
+          position: absolute; top: -12px; left: -12px; width: 36px; height: 36px; border-radius: 50%;
+          background: linear-gradient(145deg, #f4cf6a, #d9a534); color: #3a2a05;
+          font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 16px;
+          display: flex; align-items: center; justify-content: center;
+          box-shadow: 0 3px 8px rgba(0,0,0,.45); border: 2px solid #fff2cf;
+        }
+        .sq-cap-body { flex: 1 1 auto; min-width: 0; z-index: 1; }
+        .sq-cap-tag {
+          display: inline-block; font-family: 'Oswald', sans-serif; font-size: 11px;
+          letter-spacing: .18em; text-transform: uppercase; color: #f2c14e; margin-bottom: 4px;
+        }
+        .sq-cap-name {
+          font-family: 'Oswald', sans-serif; font-weight: 700; text-transform: uppercase;
+          font-size: 28px; line-height: 1.04; margin: 0 0 3px; color: #fff; letter-spacing: .01em;
+        }
+        .sq-cap-role { color: #bfe3d4; font-size: 14px; margin: 0 0 11px; }
+        .sq-cap-degrees { list-style: none; margin: 0 0 12px; padding: 0; }
+        .sq-cap-degrees li {
+          font-size: 12.5px; color: #c8ddd4; padding-left: 16px; position: relative; margin: 3px 0; line-height: 1.4;
+        }
+        .sq-cap-degrees li::before { content: "▸"; position: absolute; left: 0; color: #34d3ad; }
+        .sq-cap-meta { font-size: 12.5px; color: #c8ddd4; margin: 2px 0; }
+        .sq-cap-meta a { color: #7fe6c4; text-decoration: none; }
+        .sq-cap-meta a:hover { text-decoration: underline; }
+        .sq-links { margin-top: 13px; display: flex; flex-wrap: wrap; gap: 8px; }
+        .sq-links a {
+          font-family: 'Oswald', sans-serif; font-size: 12px; letter-spacing: .05em;
+          text-transform: uppercase; color: #0b2b2b; font-weight: 600;
+          background: linear-gradient(145deg, #f4cf6a, #e0b445);
+          padding: 6px 12px; border-radius: 7px; text-decoration: none;
+          transition: transform .15s ease, box-shadow .15s ease;
+        }
+        .sq-links a:hover { transform: translateY(-2px); box-shadow: 0 6px 14px -6px rgba(242,193,78,.7); }
+
+        /* ---- Player cards ---- */
+        .sq-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+        .sq-card {
+          position: relative; width: 188px; text-align: left;
+          background: linear-gradient(165deg, #123f39, #0b2726);
+          border: 1px solid rgba(255,255,255,.12); border-radius: 14px; overflow: hidden;
+          cursor: pointer; color: #eaf5f0; outline: none;
+          opacity: 0; transform: translateY(16px);
+          transition: opacity .5s ease, transform .5s ease, box-shadow .25s ease, border-color .25s ease;
+        }
+        .sq-card.sq-in { opacity: 1; transform: translateY(0); }
+        .sq-card:hover, .sq-card:focus-within, .sq-card.is-open {
+          border-color: rgba(52,211,173,.7);
+          box-shadow: 0 16px 30px -16px rgba(0,0,0,.7), 0 0 0 1px rgba(52,211,173,.3);
+        }
+        .sq-card:hover, .sq-card.is-open { transform: translateY(-6px); }
+
+        .sq-photo { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #0a201e; }
+        .sq-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .45s ease; }
+        .sq-card:hover .sq-photo img { transform: scale(1.05); }
+        .sq-photo::after {                     /* sheen sweep on hover */
+          content: ""; position: absolute; inset: 0; pointer-events: none;
+          background: linear-gradient(120deg, transparent 40%, rgba(255,255,255,.18) 50%, transparent 60%);
+          transform: translateX(-120%); transition: transform .6s ease;
+        }
+        .sq-card:hover .sq-photo::after { transform: translateX(120%); }
+        .sq-num {
+          position: absolute; top: 8px; right: 8px; min-width: 26px; height: 26px; padding: 0 6px;
+          border-radius: 7px; background: rgba(9,30,28,.8); color: #7fe6c4;
+          font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 14px;
+          display: flex; align-items: center; justify-content: center;
+          border: 1px solid rgba(127,230,196,.4);
+        }
+        .sq-plate { padding: 10px 12px 12px; }
+        .sq-name {
+          font-family: 'Oswald', sans-serif; font-weight: 600; text-transform: uppercase;
+          font-size: 15px; line-height: 1.15; margin: 0; color: #fff; letter-spacing: .02em;
+        }
+        .sq-plate-row { display: flex; align-items: center; justify-content: space-between; margin-top: 3px; gap: 8px; }
+        .sq-role {
+          font-family: 'Oswald', sans-serif; font-size: 11px; letter-spacing: .08em;
+          text-transform: uppercase; color: #34d3ad;
+        }
+        .sq-more { color: #6f9c8f; font-size: 12px; transition: transform .3s ease, color .3s ease; }
+        .sq-card:hover .sq-more, .sq-card:focus-within .sq-more, .sq-card.is-open .sq-more {
+          transform: rotate(180deg); color: #34d3ad;
+        }
+        .sq-bio {
+          max-height: 0; overflow: hidden; opacity: 0; padding: 0 12px;
+          border-top: 1px solid transparent;
+          transition: max-height .45s ease, padding .45s ease, opacity .3s ease;
+        }
+        .sq-card:hover .sq-bio, .sq-card:focus-within .sq-bio, .sq-card.is-open .sq-bio {
+          max-height: 360px; padding: 11px 12px 14px; opacity: 1; border-top-color: rgba(255,255,255,.1);
+        }
+        .sq-bio p { font-size: 12px; line-height: 1.5; color: #c8ddd4; margin: 0 0 8px; }
+        .sq-bio .sq-contact { font-size: 12px; margin: 0; }
+        .sq-bio .sq-contact a { color: #7fe6c4; text-decoration: none; word-break: break-word; }
+        .sq-bio .sq-contact a:hover { text-decoration: underline; }
+        .sq-bio .sq-loc { display: block; font-size: 11px; color: #9fbcb2; margin-top: 4px; }
+
+        @media (max-width: 720px) {
+          .sq-captain { flex-direction: column; text-align: center; }
+          .sq-cap-photo img { width: 144px; height: 178px; }
+          .sq-cap-degrees { display: inline-block; text-align: left; }
+          .sq-links { justify-content: center; }
+          .sq-card { width: 150px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .sq-card { opacity: 1 !important; transform: none !important; }
+          .sq-card, .sq-photo img, .sq-photo::after, .sq-captain::after, .sq-bio, .sq-more, .sq-links a {
+            transition: none !important;
+          }
         }
       </style>
 
@@ -138,152 +313,26 @@
             </div>
 
             <div class="span8 offset1">
-               <section id="principalinvestigator">
-                  <div class="page-header">
-                     <h3>Principal Investigator</h3>
-                  </div>
-                  <div class="row-fluid">
-                     <div class="span3">
-                        <a href="https://unsplash.com/photos/aCZ2hiC-iDk" class="thumbnail">
-                        <img src="images/Yambas.jpg" alt="Edmund Ilimoan Yamba"/>
-                        </a>
-                     </div>
-                     <div class="span9">
-                        <h4>Edmund Ilimoan Yamba</h4>
-                        <p>Senior Lecturer / Research Scientist</p>
-                        <p>Ph.D., Meteorology and Climate Science, University of Cologne, Germany<br/>M.Sc., Geophysics, Kwame Nkrumah University of Science and Technology (KNUST)<br/>B.Sc., Physics, Kwame Nkrumah University of Science and Technology (KNUST)</p>
-                        <p><b>Phone: </b>+233-200-87-6117 </p>
-                        <p><b>Email: </b><a href="mailto:eiyamba@knust.edu.gh">eiyamba@knust.edu.gh</a></p>
-                        <p><b>Address: </b>KNUST, Kumasi, Ghana </p>
-                        <p><b><a href="https://www.myperfectcv.co.uk/cv-examples/chemistry-lab-technician-cv-sample">CV</a>, <a href="https://scholar.google.com/citations?user=Br4DbcIAAAAJ&hl=en&oi=ao">Google Scholar</a>, <a href="https://www.linkedin.com/in/edmund-ilimoan-yamba-3186945a/">Linkedin</a>, <a href="https://orcid.org/0000-0002-0486-9921">ORCID</a></b></p>
-                     </div>
-                  </div>
-               </section>
 
-               <hr>
+               <!-- ============ TEAM LINEUP ============ -->
+               <div class="sq-pitch">
+                  <div class="sq-crest"></div>
 
-               <section id="graduate">
-                  <div class="page-header">
-                     <h3>Graduate Students</h3>
+                  <div class="sq-line" id="principalinvestigator">
+                     <div class="sq-linehead"><span>Principal Investigator</span></div>
+                     <div class="sq-captain-slot" id="piSlot"></div>
                   </div>
-                  <div class="row-fluid">
-                     <div class="span3">
-                        <a href="https://unsplash.com/photos/aaaGLiTRqkg" class="thumbnail">
-                        <img src="images/mimipicture.jpg" alt="Mary Jesse Adjei"/>
-                        </a>
-                     </div>
-                     <div class="span9">
-                        <h4><a href="https://unsplash.com/photos/aaaGLiTRqkg">Mary Jesse Agyei (PhD Student) </a></h4>
-                        <p>Mary received her BSc and Masters in Meteorology and Climate Science in 2021 and 2024 respectively at KNUST with High Honors. Her current research focuses on Quantifying and Attributing Heat-Related Mortality to Land Use Land Change in Ghana.</p>
-                        <p><b>Email: </b><a href="mailto:maryjesse33@gmail.com">maryjesse33@gmail.com</a></p>
-                        <p><b>Address: </b> Kumasi, Ghana</p>
-                     </div>
-                  </div>
-                  <hr>
-                  <div class="row-fluid">
-                     <div class="span3">
-                        <a href="https://unsplash.com/photos/LUdelQ2EO2g" class="thumbnail">
-                        <img src="images/lizzy.jpg" alt="Elizabeth Owusu Ansah"/>
-                        </a>
-                     </div>
-                     <div class="span9">
-                        <h4><a href="https://unsplash.com/photos/LUdelQ2EO2g">Elizabeth Owusu Ansah (MPhil Student) </a></h4>
-                        <p>Elizabeth is an MPhil student in Meteorology and Climate Science at the Kwame Nkrumah University of Science and Technology. She earned her Bachelor's degree in the same field in 2023. Her academic and research interests focus on biometeorology, epidemiology, and public health. She is currently working on a project that examines how climate change affects the epidemiology of meningitis in Africa.</p>
-                        <p><b>Email: </b><a href="mailto:elizabethowusuansah2024@gmail.com">elizabethowusuansah2024@gmail.com</a></p>
-                        <p><b>Address: </b>Kumasi, Ghana</p>
-                     </div>
-                  </div>
-                  <hr>
-                  <div class="row-fluid">
-                     <div class="span3">
-                        <a href="https://unsplash.com/photos/nomivMNW07o" class="thumbnail">
-                        <img src="images/desmond.jpg" alt="Desmond Osei-Tutu"/>
-                        </a>
-                     </div>
-                     <div class="span9">
-                        <h4><a href="https://unsplash.com/photos/nomivMNW07o">Desmond Osei-Tutu (MPhil Student)</a></h4>
-                        <p>Desmond is an MPhil student in Meteorology and Climate Science at the Kwame Nkrumah University of Science and Technology. He earned his Bachelor's degree in the same field in 2023. His academic and research interests focus on Biometeorology, Air Quality monitoring and public health and disease Modelling. He is currently working on a project that Qualifies the Health Burden of PM2.5 and Source-Specific Contribution in Ghana.</p>
-                        <p><b>Email: </b><a href="mailto:desmondoseitutu2@gmail.com">desmondoseitutu2@gmail.com</a></p>
-                        <p><b>Address: </b>Kumasi, Ghana</p>
-                     </div>
-                  </div>
-                  <hr>
-               </section>
 
-               <section id="NSS">
-                  <div class="page-header">
-                     <h3>National Service Personnels</h3>
+                  <div class="sq-line" id="graduate">
+                     <div class="sq-linehead"><span>Graduate Students</span></div>
+                     <div class="sq-row" id="gradRow"></div>
                   </div>
-                  <div class="row-fluid">
-                     <div class="span3">
-                        <a href="https://unsplash.com/photos/aaaGLiTRqkg" class="thumbnail">
-                        <img src="images/passport pic.png" alt="Alex Kwao Ablerdu"/>
-                        </a>
-                     </div>
-                     <div class="span9">
-                        <h4><a href="https://unsplash.com/photos/aaaGLiTRqkg">Alex Kwao Ablerdu (Teaching Assistant)</a></h4>
-                        <p>Alex received his BSc in Meteorology and Climate Science in 2025 at KNUST. His undergraduate research focused on Evaluating the potential of VECTRI model to predict malaria cases in Ashanti region, Ghana.</p>
-                        <p><b>Email: </b><a href="mailto:alexkwao100@gmail.com">alexkwao100@gmail.com</a></p>
-                        <p><b>Address: </b> Kumasi, Ghana</p>
-                     </div>
+
+                  <div class="sq-line" id="NSS">
+                     <div class="sq-linehead"><span>National Service Personnel</span></div>
+                     <div class="sq-row" id="nssRow"></div>
                   </div>
-                  <hr>
-                  <div class="row-fluid">
-                     <div class="span3">
-                        <a href="https://unsplash.com/photos/LUdelQ2EO2g" class="thumbnail">
-                        <img src="images/grace.jpeg" alt="Grace Nabe"/>
-                        </a>
-                     </div>
-                     <div class="span9">
-                        <h4><a href="https://unsplash.com/photos/LUdelQ2EO2g">Grace Nabe (Teaching Assistant) </a></h4>
-                        <p>Grace received his BSc in Meteorology and Climate Science in 2025 at KNUST. Her undergraduate research focused on Impact of Urban Heat Island Warming on Heat Related Health Risks In Ghanaian Cities</p>
-                        <p><b>Email: </b><a href="mailto:nabegrace27@gmail.com">nabegrace27@gmail.com</a></p>
-                        <p><b>Address: </b>Kumasi, Ghana</p>
-                     </div>
-                  </div>
-                  <hr>
-                  <div class="row-fluid">
-                     <div class="span3">
-                        <a href="https://unsplash.com/photos/nomivMNW07o" class="thumbnail">
-                        <img src="images/omari.jpeg" alt="Elizabeth Ansah Omari"/>
-                        </a>
-                     </div>
-                     <div class="span9">
-                        <h4><a href="https://unsplash.com/photos/nomivMNW07o">Elizabeth Ansah Omari (Teaching Assistant)</a></h4>
-                        <p>Elizabeth received his BSc in Meteorology and Climate Science in 2025 at KNUST. Her undergraduate research focused on Impact of Urban Heat Island Warming on Heat Related Health Risks In Ghanaian Cities</p>
-                        <p><b>Email: </b><a href="mailto:elizabethansahomari@gmail.com">elizabethansahomari@gmail.com</a></p>
-                        <p><b>Address: </b>Kumasi, Ghana</p>
-                     </div>
-                  </div>
-                  <hr>
-                  <div class="row-fluid">
-                     <div class="span3">
-                        <a href="https://unsplash.com/photos/nomivMNW07o" class="thumbnail">
-                        <img src="images/Joshua.jpeg" alt="Joshua Oduro Yeboah"/>
-                        </a>
-                     </div>
-                     <div class="span9">
-                        <h4><a href="https://unsplash.com/photos/nomivMNW07o">Joshua Oduro Yeboah (Teaching Assistant)</a></h4>
-                        <p>Joshua received his BSc in Meteorology and Climate Science in 2025 at KNUST. His undergraduate research focused on Climate Change Effects on Dengue Fever.</p>
-                        <p><b>Email: </b><a href="mailto:kojooduro44@gmail.com">kojooduro44@gmail.com</a></p>
-                        <p><b>Address: </b>Kumasi, Ghana</p>
-                     </div>
-                  </div>
-                  <hr>
-                  <div class="row-fluid">
-                     <div class="span3">
-                        <a href="https://unsplash.com/photos/nomivMNW07o" class="thumbnail">
-                        <img src="images/Elorm.jpeg" alt="Richmond K. Elorm Dzahene"/>
-                        </a>
-                     </div>
-                     <div class="span9">
-                        <h4><a href="https://unsplash.com/photos/nomivMNW07o">Richmond K. Elorm Dzahene (Teaching Assistant)</a></h4>
-                        <p>Richmond received his BSc in Meteorology and Climate Science in 2025 at KNUST. His undergraduate research focused on Climate Change Effects on Dengue Fever.</p>
-                        <p><b>Email: </b><a href="mailto:richmonddzahene@gmail.com">richmonddzahene@gmail.com</a></p>
-                        <p><b>Address: </b>Kumasi, Ghana</p>
-                     </div>
-                  </div>
-               </section>
+               </div>
 
                <hr>
 
@@ -337,6 +386,148 @@
          $(document).ready(function() {
              $(document.body).scrollspy({ target: "#navparent" });
          });
+      </script>
+
+      <!-- ============ Squad lineup script ============ -->
+      <script>
+      (function () {
+        // ---- Roster data. Edit here to add / update team members. ----
+        var PI = {
+          name: "Edmund Ilimoan Yamba",
+          title: "Senior Lecturer / Research Scientist",
+          photo: "images/Yambas.jpg",
+          degrees: [
+            "Ph.D., Meteorology and Climate Science, University of Cologne, Germany",
+            "M.Sc., Geophysics, KNUST",
+            "B.Sc., Physics, KNUST"
+          ],
+          phone: "+233-200-87-6117",
+          email: "eiyamba@knust.edu.gh",
+          address: "KNUST, Kumasi, Ghana",
+          links: [
+            { label: "CV", url: "https://www.myperfectcv.co.uk/cv-examples/chemistry-lab-technician-cv-sample" },
+            { label: "Google Scholar", url: "https://scholar.google.com/citations?user=Br4DbcIAAAAJ&hl=en&oi=ao" },
+            { label: "LinkedIn", url: "https://www.linkedin.com/in/edmund-ilimoan-yamba-3186945a/" },
+            { label: "ORCID", url: "https://orcid.org/0000-0002-0486-9921" }
+          ]
+        };
+
+        var GRADS = [
+          { num: 10, name: "Mary Jesse Agyei", role: "PhD Student", photo: "images/mimipicture.jpg",
+            email: "maryjesse33@gmail.com", location: "Kumasi, Ghana",
+            bio: "Mary received her BSc and Masters in Meteorology and Climate Science in 2021 and 2024 respectively at KNUST with High Honors. Her current research focuses on Quantifying and Attributing Heat-Related Mortality to Land Use Land Change in Ghana." },
+          { num: 8, name: "Elizabeth Owusu Ansah", role: "MPhil Student", photo: "images/lizzy.jpg",
+            email: "elizabethowusuansah2024@gmail.com", location: "Kumasi, Ghana",
+            bio: "Elizabeth is an MPhil student in Meteorology and Climate Science at KNUST. She earned her Bachelor's degree in the same field in 2023. Her academic and research interests focus on biometeorology, epidemiology, and public health. She is currently working on a project that examines how climate change affects the epidemiology of meningitis in Africa." },
+          { num: 6, name: "Desmond Osei-Tutu", role: "MPhil Student", photo: "images/desmond.jpg",
+            email: "desmondoseitutu2@gmail.com", location: "Kumasi, Ghana",
+            bio: "Desmond is an MPhil student in Meteorology and Climate Science at KNUST. He earned his Bachelor's degree in the same field in 2023. His academic and research interests focus on biometeorology, air quality monitoring, public health and disease modelling. He is currently working on a project that quantifies the health burden of PM2.5 and source-specific contributions in Ghana." }
+        ];
+
+        var NSS = [
+          { num: 7, name: "Alex Kwao Ablerdu", role: "Teaching Assistant", photo: "images/passport%20pic.png",
+            email: "alexkwao100@gmail.com", location: "Kumasi, Ghana",
+            bio: "Alex received his BSc in Meteorology and Climate Science in 2025 at KNUST. His undergraduate research focused on evaluating the potential of the VECTRI model to predict malaria cases in the Ashanti region, Ghana." },
+          { num: 11, name: "Grace Nabe", role: "Teaching Assistant", photo: "images/grace.jpeg",
+            email: "nabegrace27@gmail.com", location: "Kumasi, Ghana",
+            bio: "Grace received her BSc in Meteorology and Climate Science in 2025 at KNUST. Her undergraduate research focused on the impact of urban heat island warming on heat-related health risks in Ghanaian cities." },
+          { num: 9, name: "Elizabeth Ansah Omari", role: "Teaching Assistant", photo: "images/omari.jpeg",
+            email: "elizabethansahomari@gmail.com", location: "Kumasi, Ghana",
+            bio: "Elizabeth received her BSc in Meteorology and Climate Science in 2025 at KNUST. Her undergraduate research focused on the impact of urban heat island warming on heat-related health risks in Ghanaian cities." },
+          { num: 4, name: "Joshua Oduro Yeboah", role: "Teaching Assistant", photo: "images/Joshua.jpeg",
+            email: "kojooduro44@gmail.com", location: "Kumasi, Ghana",
+            bio: "Joshua received his BSc in Meteorology and Climate Science in 2025 at KNUST. His undergraduate research focused on the climate change effects on dengue fever." },
+          { num: 5, name: "Richmond K. Elorm Dzahene", role: "Teaching Assistant", photo: "images/Elorm.jpeg",
+            email: "richmonddzahene@gmail.com", location: "Kumasi, Ghana",
+            bio: "Richmond received his BSc in Meteorology and Climate Science in 2025 at KNUST. His undergraduate research focused on the climate change effects on dengue fever." }
+        ];
+
+        function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+        // ---- Captain (PI) ----
+        function renderCaptain(p) {
+          var degrees = p.degrees.map(function (d) { return '<li>' + esc(d) + '</li>'; }).join('');
+          var links = p.links.map(function (l) {
+            return '<a href="' + l.url + '" target="_blank" rel="noopener">' + esc(l.label) + '</a>';
+          }).join('');
+          return '' +
+            '<article class="sq-captain">' +
+              '<div class="sq-cap-photo">' +
+                '<img src="' + p.photo + '" alt="' + esc(p.name) + '" loading="lazy">' +
+                '<span class="sq-armband" title="Captain">C</span>' +
+              '</div>' +
+              '<div class="sq-cap-body">' +
+                '<span class="sq-cap-tag">Team Lead</span>' +
+                '<h4 class="sq-cap-name">' + esc(p.name) + '</h4>' +
+                '<p class="sq-cap-role">' + esc(p.title) + '</p>' +
+                '<ul class="sq-cap-degrees">' + degrees + '</ul>' +
+                '<p class="sq-cap-meta"><b>Phone:</b> ' + esc(p.phone) + '</p>' +
+                '<p class="sq-cap-meta"><b>Email:</b> <a href="mailto:' + p.email + '">' + esc(p.email) + '</a></p>' +
+                '<p class="sq-cap-meta"><b>Address:</b> ' + esc(p.address) + '</p>' +
+                '<div class="sq-links">' + links + '</div>' +
+              '</div>' +
+            '</article>';
+        }
+
+        // ---- Player card ----
+        function renderCard(p) {
+          return '' +
+            '<article class="sq-card" role="button" tabindex="0" aria-expanded="false" aria-label="' + esc(p.name) + ' — tap for bio">' +
+              '<div class="sq-photo">' +
+                '<img src="' + p.photo + '" alt="' + esc(p.name) + '" loading="lazy">' +
+                '<span class="sq-num">' + esc(p.num) + '</span>' +
+              '</div>' +
+              '<div class="sq-plate">' +
+                '<h4 class="sq-name">' + esc(p.name) + '</h4>' +
+                '<div class="sq-plate-row"><span class="sq-role">' + esc(p.role) + '</span><span class="sq-more" aria-hidden="true">▾</span></div>' +
+              '</div>' +
+              '<div class="sq-bio">' +
+                '<p>' + esc(p.bio) + '</p>' +
+                '<p class="sq-contact"><a href="mailto:' + p.email + '">' + esc(p.email) + '</a>' +
+                  '<span class="sq-loc">' + esc(p.location) + '</span></p>' +
+              '</div>' +
+            '</article>';
+        }
+
+        document.getElementById('piSlot').innerHTML = renderCaptain(PI);
+        document.getElementById('gradRow').innerHTML = GRADS.map(renderCard).join('');
+        document.getElementById('nssRow').innerHTML = NSS.map(renderCard).join('');
+
+        // ---- Expand / collapse behaviour (tap + keyboard; hover handled by CSS) ----
+        var cards = Array.prototype.slice.call(document.querySelectorAll('.sq-card'));
+        cards.forEach(function (card) {
+          function toggle() {
+            var open = card.classList.toggle('is-open');
+            card.setAttribute('aria-expanded', open ? 'true' : 'false');
+          }
+          card.addEventListener('click', function (e) {
+            if (e.target.closest('a')) return;      // let email links work normally
+            toggle();
+          });
+          card.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+          });
+        });
+
+        // ---- Staggered reveal on scroll (players walking on) ----
+        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduce || !('IntersectionObserver' in window)) {
+          cards.forEach(function (c) { c.classList.add('sq-in'); });
+        } else {
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                var row = entry.target.parentNode;
+                var idx = Array.prototype.indexOf.call(row.children, entry.target);
+                entry.target.style.transitionDelay = (idx * 90) + 'ms';
+                entry.target.classList.add('sq-in');
+                io.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.2 });
+          cards.forEach(function (c) { io.observe(c); });
+        }
+      })();
       </script>
 
       <!-- Leaflet JS -->
